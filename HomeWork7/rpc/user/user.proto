@@ -1,0 +1,18 @@
+syntax= "proto3";
+
+option go_package=".;user";
+
+message UserInfo{
+  string UserId=1 ;
+  string Username = 2;
+  string Password = 3;
+}
+message Response{
+  bool result = 1;
+}
+service RServer {
+  rpc Register(UserInfo) returns (Response){}
+}
+service LServer{
+  rpc Login(UserInfo) returns (Response){}
+}
