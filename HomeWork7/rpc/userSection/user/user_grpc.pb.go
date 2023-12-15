@@ -46,7 +46,7 @@ func (c *rServerClient) Register(ctx context.Context, in *UserInfo, opts ...grpc
 	return out, nil
 }
 
-// RServerServer is the server API for RServer service.
+// RServerServer is the login API for RServer service.
 // All implementations must embed UnimplementedRServerServer
 // for forward compatibility
 type RServerServer interface {
@@ -136,7 +136,7 @@ func (c *lServerClient) Login(ctx context.Context, in *UserInfo, opts ...grpc.Ca
 	return out, nil
 }
 
-// LServerServer is the server API for LServer service.
+// LServerServer is the login API for LServer service.
 // All implementations must embed UnimplementedLServerServer
 // for forward compatibility
 type LServerServer interface {

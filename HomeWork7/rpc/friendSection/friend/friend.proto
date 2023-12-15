@@ -1,0 +1,10 @@
+syntax= "proto3";
+
+option go_package=".;friend";
+
+message RelationShip{
+  string Mode = 1;
+  string SrcId =2;
+  string DstId =3;
+
+}

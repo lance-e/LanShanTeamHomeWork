@@ -12,7 +12,7 @@ import (
 // DB 全局对象
 var DB *gorm.DB
 
-func InitDb() {
+func init() {
 	//设置配置文件路径
 	var err error
 	viper.SetConfigFile("./config/config.yaml") //虽然说这一行就可以读取到配置文件了
@@ -23,11 +23,11 @@ func InitDb() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	user := viper.GetString("mysql.user")
-	pass := viper.GetString("mysql.pass")
-	ip := viper.GetString("mysql.ip")
-	port := viper.GetString("mysql.port")
-	dbname := viper.GetString("mysql.dbname")
+	user := viper.GetString("mysql1.user")
+	pass := viper.GetString("mysql1.pass")
+	ip := viper.GetString("mysql1.ip")
+	port := viper.GetString("mysql1.port")
+	dbname := viper.GetString("mysql1.dbname")
 	fmt.Println(user)
 	dsn := strings.Join([]string{user, ":", pass, "@tcp(", ip, ":", port, ")/", dbname, "?charset=utf8mb4&parseTime=True&loc=Local"}, "")
 

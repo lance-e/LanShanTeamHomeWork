@@ -1,7 +1,7 @@
 package util
 
 const (
-	RequestError = iota + 1000
-	RequestFailed
-	RequestSuccess
+	RequestError   = 500
+	RequestFailed  = 400
+	RequestSuccess = 200
 )

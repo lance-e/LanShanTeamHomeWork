@@ -13,7 +13,7 @@ func NewRouter() *gin.Engine {
 	engine.POST("/user/register", controller.Register)
 	engine.POST("/user/login", controller.Login)
 
-	friend := engine.Group("/friend")
+	friend := engine.Group("/friendSection")
 	friend.Use(middleware.JWT()) //jwt 鉴权
 	{
 		friend.POST("/requestAdd", controller.RequestAddFriend)

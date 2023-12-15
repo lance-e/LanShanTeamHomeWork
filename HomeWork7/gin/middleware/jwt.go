@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"HomeWork7/gin/dao/model"
+	"HomeWork7/gin/controller/user"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -11,16 +11,16 @@ import (
 )
 
 type Mycliam struct {
-	Id       uint   `json:"id,omitempty"`
+	Id       string `json:"id,omitempty"`
 	Username string `json:"username,omitempty"`
 	jwt.StandardClaims
 }
 
 var secret = []byte("this is my secret")
 
-func GetToken(user model.UserInfo) (string, error) {
+func GetToken(user *user.UserInfo) (string, error) {
 	claims := Mycliam{
-		Id:       user.ID,
+		Id:       user.UserId,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(10 * time.Minute).Unix(),

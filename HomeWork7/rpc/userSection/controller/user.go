@@ -2,10 +2,11 @@ package controller
 
 import (
 	"HomeWork7/rpc/userSection/dao/db"
-	"HomeWork7/rpc/userSection/dao/model"
 	user2 "HomeWork7/rpc/userSection/user"
 	"context"
+	"errors"
 	"fmt"
+	"log"
 )
 
 type UserRegister struct {
@@ -13,30 +14,27 @@ type UserRegister struct {
 }
 
 func (u *UserRegister) Register(ctx context.Context, info *user2.UserInfo) (*user2.Response, error) {
-	//注册业务
-	userInfo := &model.UserInfo{
+	userInfo := &db.UserInfo{
 
 		UserId:   info.UserId,
 		Username: info.Username,
 		Password: info.Password,
 	}
-	//先进行查重
-	n := db.DB.Find(&model.UserInfo{}).RowsAffected
-	if n != 0 {
-		return &user2.Response{
-			Result: false,
-		}, nil
-	}
 
-	//创建用户
-	n = db.DB.Model(&model.UserInfo{}).Create(&userInfo).RowsAffected
-	if n != 1 {
-		return &user2.Response{
-			Result: false,
-		}, nil
+	//调用dao层中的方法
+	ok, msg := userInfo.Register(ctx)
+	if !ok {
+		if msg == "the user already exist" {
+			return &user2.Response{
+				Result: false,
+			}, nil
+		} else {
+			return &user2.Response{
+				Result: false,
+			}, errors.New(msg)
+		}
 	}
-
-	fmt.Println("注册用户成功")
+	log.Println("注册用户成功")
 	return &user2.Response{
 		Result: true,
 	}, nil
@@ -46,8 +44,19 @@ type UserLogin struct {
 	user2.UnimplementedLServerServer
 }
 
-func (u *UserLogin) Login(context.Context, *user2.UserInfo) (*user2.Response, error) {
-	//登陆业务
+func (u *UserLogin) Login(ctx context.Context, info *user2.UserInfo) (*user2.Response, error) {
+	userInfo := &db.UserInfo{
+		UserId:   info.UserId,
+		Username: info.Username,
+		Password: info.Password,
+	}
+	ok, err := userInfo.Login(ctx)
+	if !ok || err != nil {
+		return &user2.Response{
+			Result: false,
+		}, err
+	}
+
 	fmt.Println("登陆成功")
 	return &user2.Response{
 		Result: true,
