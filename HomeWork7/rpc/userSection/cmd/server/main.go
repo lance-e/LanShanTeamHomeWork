@@ -1,37 +1,19 @@
 package main
 
 import (
-	"HomeWork7/rpc/user"
-	"context"
-	"fmt"
+	"HomeWork7/rpc/userSection/controller"
+	"HomeWork7/rpc/userSection/dao/db"
+	user2 "HomeWork7/rpc/userSection/user"
+
 	"google.golang.org/grpc"
 	"log"
 	"net"
 )
 
-type UserRegister struct {
-	user.UnimplementedRServerServer
+func init() {
+	db.InitDb()
 }
 
-func (u *UserRegister) Register(ctx context.Context, info *user.UserInfo) (*user.Response, error) {
-	//注册业务
-	fmt.Println("注册成功")
-	return &user.Response{
-		Result: true,
-	}, nil
-}
-
-type UserLogin struct {
-	user.UnimplementedLServerServer
-}
-
-func (u *UserLogin) Login(context.Context, *user.UserInfo) (*user.Response, error) {
-	//登陆业务
-	fmt.Println("登陆成功")
-	return &user.Response{
-		Result: true,
-	}, nil
-}
 func main() {
 	listener, err := net.Listen("tcp", ":9090")
 	if err != nil {
@@ -45,8 +27,8 @@ func main() {
 	lserver := grpc.NewServer()
 
 	//注册服务
-	user.RegisterRServerServer(rserver, &UserRegister{})
-	user.RegisterLServerServer(lserver, &UserLogin{})
+	user2.RegisterRServerServer(rserver, &controller.UserRegister{})
+	user2.RegisterLServerServer(lserver, &controller.UserLogin{})
 
 	//启动服务
 	//Serve方法中是有for循环的

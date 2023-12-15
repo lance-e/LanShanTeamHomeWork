@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// DB 全局对象
 var DB *gorm.DB
 
 func InitDb() {
