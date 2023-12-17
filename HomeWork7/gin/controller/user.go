@@ -78,5 +78,19 @@ func Login(c *gin.Context) {
 	})
 	return
 }
+func TestToken(c *gin.Context) {
+	username, ok := c.Get("username")
+	if !ok {
+		c.JSON(util.RequestFailed, gin.H{
+			"status":  util.RequestFailed,
+			"message": "token 出错",
+		})
+		return
+	}
+	c.JSON(util.RequestSuccess, gin.H{
+		"status":  util.RequestSuccess,
+		"message": "token 中的值：" + username.(string),
+	})
+}
 
 //.....

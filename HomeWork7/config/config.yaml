@@ -4,9 +4,3 @@ mysql1:
   ip: 127.0.0.1
   port: 3306
   dbname: homework
-mysql2:
-  user: root
-  pass: 123456
-  ip: 127.0.0.1
-  port: 3307
-  dbname: homework

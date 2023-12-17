@@ -11,5 +11,4 @@ const (
 	GroupFriend
 	ShowAllFriend
 	ShowGroupFriend
-	SearchFriend
 )

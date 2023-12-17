@@ -12,6 +12,10 @@ func main() {
 
 	r := route.NewRouter()
 	r.Run(":8081")
-	defer util.Conn1.Close()
-	defer util.Conn2.Close()
+
+	defer func() {
+		util.Conn1.Close()
+		util.Conn2.Close()
+	}()
+
 }

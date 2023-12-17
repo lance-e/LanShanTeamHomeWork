@@ -11,7 +11,7 @@ import (
 )
 
 type Mycliam struct {
-	Id       string `json:"id,omitempty"`
+	UserId   string `json:"user_id,omitempty"`
 	Username string `json:"username,omitempty"`
 	jwt.StandardClaims
 }
@@ -20,7 +20,7 @@ var secret = []byte("this is my secret")
 
 func GetToken(user *user.UserInfo) (string, error) {
 	claims := Mycliam{
-		Id:       user.UserId,
+		UserId:   user.UserId,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(10 * time.Minute).Unix(),

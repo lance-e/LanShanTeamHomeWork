@@ -18,7 +18,7 @@ func main() {
 	lserver := grpc.NewServer()
 	user2.RegisterLServerServer(lserver, &controller.UserLogin{})
 
-	log.Println("=========登陆服务启动！===========")
+	log.Println("=========登陆服务启动！！！！！！===========")
 
 	err2 := lserver.Serve(listener2)
 	if err2 != nil {
