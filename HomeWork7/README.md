@@ -15,22 +15,3 @@
 6.用户查询出来的好友列表显示的是uuid
 7.把搜索用户砍了，因为架构设计和表设计限制~~
 8.好嘛，现在把好友模块全删了，架构和数据库设计缺陷，导致后续开发无法下手，可读性非常不好
-### 接口文档
-
-1.注册：
-请求:
-postForm :username
-postForm :password
-响应：
-出错：
-code：1000
-status:1000
-error:string(error的信息)
-失败：
-code：1001
-status：1001
-message：register failed
-成功：
-code：1002
-status:1002
-message:register success

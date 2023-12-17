@@ -5,10 +5,3 @@ const (
 	RequestFailed  = 400
 	RequestSuccess = 200
 )
-const (
-	AddFriend = iota
-	DeleteFriend
-	GroupFriend
-	ShowAllFriend
-	ShowGroupFriend
-)
