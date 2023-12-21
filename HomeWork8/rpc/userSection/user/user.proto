@@ -1,0 +1,25 @@
+syntax= "proto3";
+
+option go_package=".;user";
+
+message UserInfo{
+  string UserId=1 ;
+  string Username = 2;
+  string Password = 3;
+  string StarStatus =4;
+}
+message Response{
+  bool result = 1;
+  string UserId =2;
+  string Username =3;
+  string Password =4;
+  int64 StarCount = 5;
+}
+service RServer {
+  rpc Register(UserInfo) returns (Response){}
+}
+service LServer{
+  rpc Login(UserInfo) returns (Response){}
+  rpc GetInfo(UserInfo) returns (Response){}
+  rpc Star(UserInfo) returns (Response){}
+}
