@@ -1,19 +1,24 @@
 FROM golang:1.21 
 
-ENV GOPROXY=https://goproxy.io,direct
-ENV GOOS=darwin
+# Set destination for COPY
+WORKDIR /app
 
-WORKDIR /go/src/homework10
+# Download Go modules
+COPY go.mod go.sum ./
+RUN go mod download
 
-#ADD ./go.mod .
-#ADD  ./go.sum .
-COPY . .
-RUN go mod download \
-    && go build -o helloTest main.go
+COPY *.go ./
+
+# Build
+RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
 
 #FROM scratch
 
-#WORKDIR /root/
-#COPY ./helloTest .
+#WORKDIR ./build
 
-CMD [ "helloTest" ]
+#COPY /docker-gs-ping ./
+
+EXPOSE 8080
+
+# Run
+CMD ["/docker-gs-ping"]
