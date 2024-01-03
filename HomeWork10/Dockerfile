@@ -1,24 +1,30 @@
-FROM golang:1.21 
+# syntax=docker/dockerfile:1
 
-# Set destination for COPY
+# Build the application from source
+FROM golang:1.21 AS build-stage
+
 WORKDIR /app
 
-# Download Go modules
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY *.go ./
 
-# Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
 
-#FROM scratch
+# Run the tests in the container
+FROM build-stage AS run-test-stage
+RUN go test -v ./...
 
-#WORKDIR ./build
+# Deploy the application binary into a lean image
+FROM gcr.io/distroless/base-debian11 AS build-release-stage
 
-#COPY /docker-gs-ping ./
+WORKDIR /
+
+COPY --from=build-stage /docker-gs-ping /docker-gs-ping
 
 EXPOSE 8080
 
-# Run
-CMD ["/docker-gs-ping"]
+USER nonroot:nonroot
+
+ENTRYPOINT ["/docker-gs-ping"]
